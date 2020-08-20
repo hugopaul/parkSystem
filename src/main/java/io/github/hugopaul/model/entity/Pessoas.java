@@ -41,7 +41,7 @@ public class Pessoas {
     @ManyToOne
     @JoinColumn(name = "id_motos")
     private Motos motos;
-    @Column(name= "data_cadastro")
+    @Column(name= "data_cadastro", updatable = false)
     private LocalDate dataCadastro;
 
     @PrePersist

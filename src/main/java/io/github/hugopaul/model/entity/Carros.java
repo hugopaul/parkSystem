@@ -34,7 +34,7 @@ public class Carros {
     @Column(name = "doc_ano", nullable = false, length = 4)
     private Integer docAno;
 
-    @Column(name= "data_cadastro")
+    @Column(name= "data_cadastro", updatable = false)
     private LocalDate dataCadastro;
 
     @PrePersist

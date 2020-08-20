@@ -37,6 +37,16 @@ public class PessoasController {
                 })
                 .orElseThrow(
                         () -> new ResponseStatusException(HttpStatus.NOT_FOUND));
-
+    }
+    @PutMapping("{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void atualizar(@PathVariable Integer id, @RequestBody Pessoas pessoasAtualizado){
+        repository.findById(id)
+                .map(pessoas -> {
+                    pessoasAtualizado.setId(pessoas.getId());
+                    return repository.save(pessoasAtualizado);
+                })
+                .orElseThrow(
+                        () -> new ResponseStatusException(HttpStatus.NOT_FOUND));
     }
 }

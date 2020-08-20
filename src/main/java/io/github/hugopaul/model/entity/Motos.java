@@ -31,7 +31,7 @@ public class Motos {
     @Column(name = "doc_ano", nullable = false, length = 4)
     private Integer docAno;
 
-    @Column(name= "data_cadastro")
+    @Column(name= "data_cadastro", updatable = false)
     @JsonFormat(pattern = "dd/MM/yyyy")
     private LocalDate dataCadastro;
 
