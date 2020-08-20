@@ -24,6 +24,6 @@ public class Carros {
     @Column(nullable = false, length = 12)
     private String placa;
 
-    @Column(nullable = false, length = 4)
+    @Column(name = "doc_ano", nullable = false, length = 4)
     private Integer docAno;
 }
