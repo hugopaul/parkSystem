@@ -6,6 +6,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 
 @Entity
@@ -19,19 +21,22 @@ public class Pessoas {
     private Integer id;
 
     @Column(nullable = false, length = 150)
+    @NotEmpty
     private String nome;
 
     @Column(name = "guerra", nullable = false, length = 50)
+    @NotEmpty
     private String guerra;
 
     @Column(nullable = false, length = 14)
-    private Integer idtMil;
+    @NotEmpty
+    private String idtMil;
 
     @Column(nullable = false, length = 150)
     private String secao;
 
-    @Column(nullable = false, length = 20)
-    private Integer telefone;
+    @Column(length = 20)
+    private String telefone;
 
     @Column( length = 4)
     private Integer ramal;
@@ -41,6 +46,7 @@ public class Pessoas {
     @ManyToOne
     @JoinColumn(name = "id_motos")
     private Motos motos;
+
     @Column(name= "data_cadastro", updatable = false)
     private LocalDate dataCadastro;
 

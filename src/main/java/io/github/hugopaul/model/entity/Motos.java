@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.*;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotEmpty;
 import java.time.LocalDate;
 
 @Entity
@@ -17,6 +18,7 @@ public class Motos {
     private Integer id;
 
     @Column(nullable = false, length = 150)
+    @NotEmpty
     private String renavam;
 
     @Column(nullable = false, length = 150)
@@ -26,9 +28,11 @@ public class Motos {
     private String cor;
 
     @Column(nullable = false, length = 12)
+    @NotEmpty
     private String placa;
 
     @Column(name = "doc_ano", nullable = false, length = 4)
+    @NotEmpty
     private Integer docAno;
 
     @Column(name= "data_cadastro", updatable = false)
