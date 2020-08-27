@@ -7,7 +7,6 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 
 @Entity
@@ -21,7 +20,7 @@ public class Pessoas {
     private Integer id;
 
     @Column(nullable = false, length = 150)
-    @NotEmpty
+    @NotEmpty(message = "nome não pode ser vazio")
     private String nome;
 
     @Column(name = "guerra", nullable = false, length = 50)
@@ -53,7 +52,6 @@ public class Pessoas {
     @PrePersist
     public void prePersist(){
         setDataCadastro(LocalDate.now());
-
     }
 
 }

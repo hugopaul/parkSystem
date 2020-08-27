@@ -7,6 +7,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
+import javax.validation.Valid;
+
 @RestController
 @RequestMapping("/api/pessoas")
 public class PessoasController {
@@ -18,9 +20,10 @@ public class PessoasController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public Pessoas salvar( @RequestBody Pessoas p){
+    public Pessoas salvar(@Valid @RequestBody Pessoas p){
         return repository.save(p);
     }
+
     @GetMapping("{id}")
     public Pessoas acharPorId(@PathVariable Integer id){
         return repository.findById(id).orElseThrow(
