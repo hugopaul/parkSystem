@@ -1,5 +1,6 @@
 package io.github.hugopaul.model.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -20,18 +21,19 @@ public class Pessoas {
     private Integer id;
 
     @Column(nullable = false, length = 150)
-    @NotEmpty(message = "nome não pode ser vazio")
+    @NotEmpty(message = "O campo NOME é obrigatório.")
     private String nome;
 
     @Column(name = "guerra", nullable = false, length = 50)
-    @NotEmpty
+    @NotEmpty(message = "O campo NOME DE GUERRA é obrigatório." )
     private String guerra;
 
     @Column(nullable = false, length = 14)
-    @NotEmpty
+    @NotEmpty(message = "O campo IDENTIDADE MILITAR é obrigatório.")
     private String idtMil;
 
     @Column(nullable = false, length = 150)
+    @NotEmpty(message = "O campo SEÇÃO é obrigatório.")
     private String secao;
 
     @Column(length = 20)
@@ -46,12 +48,13 @@ public class Pessoas {
     @JoinColumn(name = "id_motos")
     private Motos motos;
 
+
     @Column(name= "data_cadastro", updatable = false)
+    @JsonFormat(pattern = "dd/MM/yyyy")
     private LocalDate dataCadastro;
 
     @PrePersist
-    public void prePersist(){
+    public void prePersist() {
         setDataCadastro(LocalDate.now());
     }
-
 }

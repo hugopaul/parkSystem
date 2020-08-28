@@ -20,14 +20,14 @@ public class PessoasController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public Pessoas salvar(@Valid @RequestBody Pessoas p){
+    public Pessoas salvar( @RequestBody @Valid Pessoas p){
         return repository.save(p);
     }
 
     @GetMapping("{id}")
     public Pessoas acharPorId(@PathVariable Integer id){
         return repository.findById(id).orElseThrow(
-                () -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+                () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Cliente não encontrado"));
     }
 
     @DeleteMapping("{id}")
@@ -39,7 +39,8 @@ public class PessoasController {
                     return Void.TYPE;
                 })
                 .orElseThrow(
-                        () -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+                        () -> new ResponseStatusException(HttpStatus.NOT_FOUND,
+                                "Cliente não encontrado"));
     }
     @PutMapping("{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)

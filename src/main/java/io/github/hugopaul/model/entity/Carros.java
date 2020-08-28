@@ -21,22 +21,24 @@ public class Carros {
     private Integer id;
 
     @Column(nullable = false, length = 150)
-    @NotEmpty
+    @NotEmpty(message = "O campo RENAVAM é obrigatório.")
     private String renavam;
 
     @Column(nullable = false, length = 150)
+    @NotEmpty(message = "O campo MODELO é obrigatório")
     private String modelo;
 
     @Column(nullable = false, length = 30)
+    @NotEmpty(message = "O campo COR é obrigatório.")
     private String cor;
 
     @Column(nullable = false, length = 12)
-    @NotEmpty
+    @NotEmpty(message = "O campo PLACA é obrigatório.")
     private String placa;
 
     @Column(name = "doc_ano", nullable = false, length = 4)
-    @NotEmpty
-    private Integer docAno;
+    @NotEmpty(message = "O ANO DO DOCUMENTO é obrigatório.")
+    private String docAno;
 
     @Column(name= "data_cadastro", updatable = false)
     private LocalDate dataCadastro;

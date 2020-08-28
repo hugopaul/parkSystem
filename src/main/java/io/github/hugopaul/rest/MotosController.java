@@ -9,6 +9,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
+import javax.validation.Valid;
+
 @RestController
 @RequestMapping("/api/motos")
 public class MotosController {
@@ -20,13 +22,14 @@ public class MotosController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public Motos salvar(@RequestBody Motos m){
-        return repository.save(m);
+    public Motos salvar(@RequestBody @Valid Motos p){
+        return repository.save(p);
     }
+
     @GetMapping("{id}")
     public Motos acharPorId(@PathVariable Integer id){
         return repository.findById(id).orElseThrow(
-                () -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+                () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Moto não encontrado"));
     }
 
     @DeleteMapping("{id}")
@@ -38,15 +41,16 @@ public class MotosController {
                     return Void.TYPE;
                 })
                 .orElseThrow(
-                        () -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+                        () -> new ResponseStatusException(HttpStatus.NOT_FOUND,
+                                "Moto não encontrado"));
     }
     @PutMapping("{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void atualizar(@PathVariable Integer id, @RequestBody Motos pessoasAtualizado){
+    public void atualizar(@PathVariable Integer id, @RequestBody Motos motosAtualizado){
         repository.findById(id)
                 .map(motos -> {
-                    pessoasAtualizado.setId(motos.getId());
-                    return repository.save(pessoasAtualizado);
+                    motosAtualizado.setId(motos.getId());
+                    return repository.save(motosAtualizado);
                 })
                 .orElseThrow(
                         () -> new ResponseStatusException(HttpStatus.NOT_FOUND));
