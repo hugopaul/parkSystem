@@ -1,18 +1,20 @@
 package io.github.hugopaul.rest;
 
-import io.github.hugopaul.model.entity.Motos;
-import io.github.hugopaul.model.entity.Pessoas;
+import io.github.hugopaul.model.repository.CarrosRepository;
 import io.github.hugopaul.model.repository.MotosRepository;
-import io.github.hugopaul.model.repository.PessoasRepository;
+import io.github.hugopaul.pojo.Carros;
+import io.github.hugopaul.pojo.Motos;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 import javax.validation.Valid;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("/api/motos")
+@RequestMapping("/motos")
 public class MotosController {
     private final MotosRepository repository;
     @Autowired
@@ -22,14 +24,15 @@ public class MotosController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public Motos salvar(@RequestBody @Valid Motos p){
-        return repository.save(p);
+    public Motos create(@RequestBody @Valid Motos m){
+        m.setId(null);
+        return new Motos(repository.save(m.toEntity()));
     }
 
     @GetMapping("{id}")
-    public Motos acharPorId(@PathVariable Integer id){
-        return repository.findById(id).orElseThrow(
-                () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Moto não encontrado"));
+    public Motos get(@PathVariable Integer id){
+        return new Motos(repository.findById(id).orElseThrow(
+                () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Moto não encontrado")));
     }
 
     @DeleteMapping("{id}")
@@ -42,17 +45,21 @@ public class MotosController {
                 })
                 .orElseThrow(
                         () -> new ResponseStatusException(HttpStatus.NOT_FOUND,
-                                "Moto não encontrado"));
+                                "Moto não encontrada"));
     }
-    @PutMapping("{id}")
+    @PutMapping(path = "/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void atualizar(@PathVariable Integer id, @RequestBody Motos motosAtualizado){
         repository.findById(id)
-                .map(motos -> {
-                    motosAtualizado.setId(motos.getId());
-                    return repository.save(motosAtualizado);
+                .map(motosDesatualizado -> {
+                    motosAtualizado.setId(motosDesatualizado.getId());
+                    return repository.save(motosAtualizado.toEntity());
                 })
                 .orElseThrow(
-                        () -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+                        () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Moto não encontrada"));
+    }
+    @GetMapping
+    public List<Motos> findAll(){
+        return repository.findAll().stream().map(Motos::new).collect(Collectors.toList());
     }
 }

@@ -1,5 +1,7 @@
 package io.github.hugopaul.model.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import io.github.hugopaul.pojo.Pessoas;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -8,20 +10,20 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import java.time.LocalDate;
+import java.util.List;
 
 @Entity
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class Carros {
-
+public class MotosEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     @Column(nullable = false, length = 150)
-    @NotEmpty(message = "O campo RENAVAM é obrigatório.")
+    @NotEmpty(message = "{campo.renavam.obrigatorio}")
     private String renavam;
 
     @Column(nullable = false, length = 150)
@@ -41,10 +43,16 @@ public class Carros {
     private String docAno;
 
     @Column(name= "data_cadastro", updatable = false)
+    @JsonFormat(pattern = "dd/MM/yyyy")
     private LocalDate dataCadastro;
+
+    @OneToMany(mappedBy = "motos")
+    private List<PessoasEntity> pessoas;
 
     @PrePersist
     public void prePersist(){
         setDataCadastro(LocalDate.now());
+
     }
+
 }

@@ -1,16 +1,18 @@
 package io.github.hugopaul.rest;
 
-import io.github.hugopaul.model.entity.Carros;
 import io.github.hugopaul.model.repository.CarrosRepository;
+import io.github.hugopaul.pojo.Carros;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 import javax.validation.Valid;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("/api/carros")
+@RequestMapping("/carros")
 public class CarrosController {
     private final CarrosRepository repository;
     @Autowired
@@ -20,14 +22,15 @@ public class CarrosController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public Carros salvar( @RequestBody @Valid Carros c){
-        return repository.save(c);
+    public Carros create(@RequestBody @Valid Carros c){
+        c.setId(null);
+        return new Carros(repository.save(c.toEntity()));
     }
 
     @GetMapping("{id}")
-    public Carros acharPorId(@PathVariable Integer id){
-        return repository.findById(id).orElseThrow(
-                () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Carro não encontrado"));
+    public Carros get(@PathVariable Integer id){
+        return new Carros(repository.findById(id).orElseThrow(
+                () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Carro não encontrado")));
     }
 
     @DeleteMapping("{id}")
@@ -42,15 +45,19 @@ public class CarrosController {
                         () -> new ResponseStatusException(HttpStatus.NOT_FOUND,
                                 "Carro não encontrado"));
     }
-    @PutMapping("{id}")
+    @PutMapping(path = "/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void atualizar(@PathVariable Integer id, @RequestBody Carros carrosAtualizado){
         repository.findById(id)
-                .map(carros -> {
-                    carrosAtualizado.setId(carros.getId());
-                    return repository.save(carrosAtualizado);
+                .map(carrosDesatualizado -> {
+                    carrosAtualizado.setId(carrosDesatualizado.getId());
+                    return repository.save(carrosAtualizado.toEntity());
                 })
                 .orElseThrow(
-                        () -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+                        () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Carro não encontrado"));
+    }
+    @GetMapping
+    public List<Carros> findAll(){
+        return repository.findAll().stream().map(Carros::new).collect(Collectors.toList());
     }
 }

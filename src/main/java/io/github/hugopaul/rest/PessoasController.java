@@ -1,16 +1,19 @@
 package io.github.hugopaul.rest;
 
-import io.github.hugopaul.model.entity.Pessoas;
 import io.github.hugopaul.model.repository.PessoasRepository;
+import io.github.hugopaul.pojo.Carros;
+import io.github.hugopaul.pojo.Pessoas;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 import javax.validation.Valid;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("/api/pessoas")
+@RequestMapping("/pessoas")
 public class PessoasController {
     private final PessoasRepository repository;
     @Autowired
@@ -19,15 +22,17 @@ public class PessoasController {
     }
 
     @PostMapping
-    @ResponseStatus(HttpStatus.CREATED)
-    public Pessoas salvar( @RequestBody @Valid Pessoas p){
-        return repository.save(p);
+    public Pessoas salvar(@RequestBody Pessoas p){
+        p.setId(null);
+        p.setCarros(null);
+        p.setMotos(null);
+        return new Pessoas (repository.save(p.toEntity()));
     }
 
     @GetMapping("{id}")
     public Pessoas acharPorId(@PathVariable Integer id){
-        return repository.findById(id).orElseThrow(
-                () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Cliente não encontrado"));
+        return new Pessoas(repository.findById(id).orElseThrow(
+                () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Cliente não encontrado")));
     }
 
     @DeleteMapping("{id}")
@@ -46,11 +51,16 @@ public class PessoasController {
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void atualizar(@PathVariable Integer id, @RequestBody Pessoas pessoasAtualizado){
         repository.findById(id)
-                .map(pessoas -> {
-                    pessoasAtualizado.setId(pessoas.getId());
-                    return repository.save(pessoasAtualizado);
+                .map(pessoasDesatualizado -> {
+                    pessoasDesatualizado.setId(pessoasAtualizado.getId());
+                    return repository.save(pessoasAtualizado.toEntity());
                 })
                 .orElseThrow(
-                        () -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+                        () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Pessoa não encontrada"));
     }
+    @GetMapping
+    public List<Pessoas> findAll(){
+        return repository.findAll().stream().map(Pessoas::new).collect(Collectors.toList());
+    }
+
 }

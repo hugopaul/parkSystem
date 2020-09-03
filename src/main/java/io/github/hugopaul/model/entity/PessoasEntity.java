@@ -9,13 +9,14 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import java.time.LocalDate;
+import java.util.List;
 
 @Entity
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class Pessoas {
+public class PessoasEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
@@ -41,13 +42,14 @@ public class Pessoas {
 
     @Column( length = 4)
     private Integer ramal;
+
     @ManyToOne
     @JoinColumn(name = "id_carros")
-    private Carros carros;
+    private CarrosEntity carros;
+
     @ManyToOne
     @JoinColumn(name = "id_motos")
-    private Motos motos;
-
+    private MotosEntity motos;
 
     @Column(name= "data_cadastro", updatable = false)
     @JsonFormat(pattern = "dd/MM/yyyy")
