@@ -18,10 +18,6 @@ public class Pessoas {
 
     private Integer ramal;
 
-    private Carros carros;
-
-    private Motos motos;
-
     public Pessoas(){
 
     }
@@ -33,6 +29,7 @@ public class Pessoas {
         this.secao = pessoasEntity.getSecao();
         this.telefone = pessoasEntity.getTelefone();
         this.ramal = pessoasEntity.getRamal();
+
     }
     public PessoasEntity toEntity(){
         PessoasEntity entity = new PessoasEntity();
@@ -103,19 +100,4 @@ public class Pessoas {
         this.ramal = ramal;
     }
 
-    public Carros getCarros() {
-        return carros;
-    }
-
-    public void setCarros(Carros carros) {
-        this.carros = carros;
-    }
-
-    public Motos getMotos() {
-        return motos;
-    }
-
-    public void setMotos(Motos motos) {
-        this.motos = motos;
-    }
 }

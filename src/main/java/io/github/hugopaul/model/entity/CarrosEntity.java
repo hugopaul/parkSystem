@@ -8,7 +8,6 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import java.time.LocalDate;
-import java.util.List;
 
 @Entity
 @Data
@@ -44,8 +43,9 @@ public class CarrosEntity {
     @Column(name= "data_cadastro", updatable = false)
     private LocalDate dataCadastro;
 
-    @OneToMany(mappedBy = "carros")
-    private List<PessoasEntity> pessoas;
+    @ManyToOne
+    @JoinColumn(name = "carros_pessoas")
+    private PessoasEntity pessoas;
 
 
     @PrePersist

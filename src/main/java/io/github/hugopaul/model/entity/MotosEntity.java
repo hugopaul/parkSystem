@@ -1,7 +1,6 @@
 package io.github.hugopaul.model.entity;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import io.github.hugopaul.pojo.Pessoas;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -10,7 +9,6 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import java.time.LocalDate;
-import java.util.List;
 
 @Entity
 @Data
@@ -46,8 +44,9 @@ public class MotosEntity {
     @JsonFormat(pattern = "dd/MM/yyyy")
     private LocalDate dataCadastro;
 
-    @OneToMany(mappedBy = "motos")
-    private List<PessoasEntity> pessoas;
+    @ManyToOne
+    @JoinColumn(name = "motos_pessoas")
+    private PessoasEntity pessoas;
 
     @PrePersist
     public void prePersist(){

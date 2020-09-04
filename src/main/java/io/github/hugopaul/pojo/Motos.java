@@ -1,12 +1,10 @@
 package io.github.hugopaul.pojo;
 
 import io.github.hugopaul.model.entity.MotosEntity;
-import io.github.hugopaul.model.entity.PessoasEntity;
 
-import java.time.LocalDate;
-import java.util.List;
+public class Motos {
 
-public class Motos {private Integer id;
+    private Integer id;
 
     private String renavam;
 
@@ -18,9 +16,7 @@ public class Motos {private Integer id;
 
     private String docAno;
 
-    private LocalDate dataCadastro;
-
-    private List<PessoasEntity> pessoas;
+    private Pessoas pessoas;
 
     public Motos(){
 
@@ -32,8 +28,7 @@ public class Motos {private Integer id;
         this.cor=motosEntity.getCor();
         this.placa=motosEntity.getPlaca();
         this.docAno=motosEntity.getDocAno();
-        this.dataCadastro=motosEntity.getDataCadastro();
-        this.pessoas=motosEntity.getPessoas();
+        this.pessoas= new Pessoas(motosEntity.getPessoas());
     }
     public MotosEntity toEntity(){
         MotosEntity entity = new MotosEntity();
@@ -43,8 +38,7 @@ public class Motos {private Integer id;
         entity.setCor(cor);
         entity.setPlaca(placa);
         entity.setDocAno(docAno);
-        entity.setDataCadastro(dataCadastro);
-        entity.setPessoas(pessoas);
+        entity.setPessoas(pessoas.toEntity());
         return entity;
     }
 
@@ -96,11 +90,12 @@ public class Motos {private Integer id;
         this.docAno = docAno;
     }
 
-    public LocalDate getDataCadastro() {
-        return dataCadastro;
+
+    public Pessoas getPessoas() {
+        return pessoas;
     }
 
-    public void setDataCadastro(LocalDate dataCadastro) {
-        this.dataCadastro = dataCadastro;
+    public void setPessoas(Pessoas pessoas) {
+        this.pessoas = pessoas;
     }
 }

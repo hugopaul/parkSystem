@@ -3,10 +3,8 @@ package io.github.hugopaul.pojo;
 import io.github.hugopaul.model.entity.CarrosEntity;
 import io.github.hugopaul.model.entity.PessoasEntity;
 
-import java.time.LocalDate;
-import java.util.List;
-
 public class Carros {
+
     private Integer id;
 
     private String renavam;
@@ -19,9 +17,7 @@ public class Carros {
 
     private String docAno;
 
-    private LocalDate dataCadastro;
-
-    private List<PessoasEntity> pessoas;
+    private Pessoas pessoas;
 
     public Carros(){
 
@@ -33,8 +29,7 @@ public class Carros {
         this.cor=carrosEntity.getCor();
         this.placa=carrosEntity.getPlaca();
         this.docAno=carrosEntity.getDocAno();
-        this.dataCadastro=carrosEntity.getDataCadastro();
-        this.pessoas=carrosEntity.getPessoas();
+        this.pessoas=new Pessoas(carrosEntity.getPessoas());
     }
     public CarrosEntity toEntity(){
         CarrosEntity entity = new CarrosEntity();
@@ -44,8 +39,7 @@ public class Carros {
         entity.setCor(cor);
         entity.setPlaca(placa);
         entity.setDocAno(docAno);
-        entity.setDataCadastro(dataCadastro);
-        entity.setPessoas(pessoas);
+        entity.setPessoas(PessoasEntity.builder().build());
         return entity;
     }
 
@@ -97,11 +91,5 @@ public class Carros {
         this.docAno = docAno;
     }
 
-    public LocalDate getDataCadastro() {
-        return dataCadastro;
-    }
 
-    public void setDataCadastro(LocalDate dataCadastro) {
-        this.dataCadastro = dataCadastro;
-    }
 }

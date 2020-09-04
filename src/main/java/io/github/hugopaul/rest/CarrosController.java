@@ -7,7 +7,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
-import javax.validation.Valid;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -22,7 +21,7 @@ public class CarrosController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public Carros create(@RequestBody @Valid Carros c){
+    public Carros create(@RequestBody Carros c){
         c.setId(null);
         return new Carros(repository.save(c.toEntity()));
     }

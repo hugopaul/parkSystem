@@ -43,13 +43,11 @@ public class PessoasEntity {
     @Column( length = 4)
     private Integer ramal;
 
-    @ManyToOne
-    @JoinColumn(name = "id_carros")
-    private CarrosEntity carros;
+    @OneToMany(mappedBy = "pessoas")
+    private List<CarrosEntity> carros;
 
-    @ManyToOne
-    @JoinColumn(name = "id_motos")
-    private MotosEntity motos;
+    @OneToMany(mappedBy = "pessoas")
+    private List<MotosEntity> motos;
 
     @Column(name= "data_cadastro", updatable = false)
     @JsonFormat(pattern = "dd/MM/yyyy")
