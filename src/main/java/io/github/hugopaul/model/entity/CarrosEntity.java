@@ -44,7 +44,7 @@ public class CarrosEntity {
     private LocalDate dataCadastro;
 
     @ManyToOne
-    @JoinColumn(name = "carros_pessoas")
+    @JoinColumn(name = "id_pessoas")
     private PessoasEntity pessoas;
 
 

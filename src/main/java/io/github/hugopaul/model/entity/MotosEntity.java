@@ -45,7 +45,7 @@ public class MotosEntity {
     private LocalDate dataCadastro;
 
     @ManyToOne
-    @JoinColumn(name = "motos_pessoas")
+    @JoinColumn(name = "id_pessoas")
     private PessoasEntity pessoas;
 
     @PrePersist

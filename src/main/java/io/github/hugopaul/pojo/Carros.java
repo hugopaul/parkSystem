@@ -1,7 +1,6 @@
 package io.github.hugopaul.pojo;
 
 import io.github.hugopaul.model.entity.CarrosEntity;
-import io.github.hugopaul.model.entity.PessoasEntity;
 
 public class Carros {
 
@@ -39,7 +38,7 @@ public class Carros {
         entity.setCor(cor);
         entity.setPlaca(placa);
         entity.setDocAno(docAno);
-        entity.setPessoas(PessoasEntity.builder().build());
+        entity.setPessoas(pessoas.toEntity());
         return entity;
     }
 
@@ -91,5 +90,11 @@ public class Carros {
         this.docAno = docAno;
     }
 
+    public Pessoas getPessoas() {
+        return pessoas;
+    }
 
+    public void setPessoas(Pessoas pessoas) {
+        this.pessoas = pessoas;
+    }
 }

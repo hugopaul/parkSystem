@@ -28,7 +28,7 @@ public class Motos {
         this.cor=motosEntity.getCor();
         this.placa=motosEntity.getPlaca();
         this.docAno=motosEntity.getDocAno();
-        this.pessoas= new Pessoas(motosEntity.getPessoas());
+        this.pessoas=new Pessoas(motosEntity.getPessoas());
     }
     public MotosEntity toEntity(){
         MotosEntity entity = new MotosEntity();
@@ -89,7 +89,6 @@ public class Motos {
     public void setDocAno(String docAno) {
         this.docAno = docAno;
     }
-
 
     public Pessoas getPessoas() {
         return pessoas;

@@ -9,7 +9,6 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import java.time.LocalDate;
-import java.util.List;
 
 @Entity
 @Data
@@ -42,12 +41,6 @@ public class PessoasEntity {
 
     @Column( length = 4)
     private Integer ramal;
-
-    @OneToMany(mappedBy = "pessoas")
-    private List<CarrosEntity> carros;
-
-    @OneToMany(mappedBy = "pessoas")
-    private List<MotosEntity> motos;
 
     @Column(name= "data_cadastro", updatable = false)
     @JsonFormat(pattern = "dd/MM/yyyy")

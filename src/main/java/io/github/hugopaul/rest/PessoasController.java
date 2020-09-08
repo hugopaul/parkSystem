@@ -43,13 +43,13 @@ public class PessoasController {
                         () -> new ResponseStatusException(HttpStatus.NOT_FOUND,
                                 "Cliente não encontrado"));
     }
-    @PutMapping("{id}")
+    @PutMapping(path = "/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void atualizar(@PathVariable Integer id, @RequestBody Pessoas pessoasAtualizado){
         repository.findById(id)
                 .map(pessoasDesatualizado -> {
                     pessoasDesatualizado.setId(pessoasAtualizado.getId());
-                    return repository.save(pessoasAtualizado.toEntity());
+                    return new Pessoas(repository.save(pessoasAtualizado.toEntity()));
                 })
                 .orElseThrow(
                         () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Pessoa não encontrada"));
