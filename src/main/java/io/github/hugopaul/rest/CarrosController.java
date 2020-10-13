@@ -12,6 +12,7 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/carros")
+@CrossOrigin("http://localhost:4200")
 public class CarrosController {
     private final CarrosRepository repository;
     @Autowired

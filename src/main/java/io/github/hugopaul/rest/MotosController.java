@@ -1,8 +1,6 @@
 package io.github.hugopaul.rest;
 
-import io.github.hugopaul.model.repository.CarrosRepository;
 import io.github.hugopaul.model.repository.MotosRepository;
-import io.github.hugopaul.pojo.Carros;
 import io.github.hugopaul.pojo.Motos;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -15,6 +13,7 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/motos")
+@CrossOrigin("http://localhost:4200")
 public class MotosController {
     private final MotosRepository repository;
     @Autowired
